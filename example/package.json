@@ -9,10 +9,11 @@
   "author": "whattokingu <zhengweihan.91@gmail.com> (zweihan.com)",
   "license": "ISC",
   "devDependencies": {
-    "browserify": "^11.0.1",
     "eases": "^1.0.6",
     "gulp": "^3.9.0",
     "gulp-babel": "^5.2.1",
+    "gulp-browserify": "^0.5.1",
+    "gulp-rename": "^1.2.2",
     "react": "^0.13.3",
     "react-animation-mixin": "0.0.4"
   }

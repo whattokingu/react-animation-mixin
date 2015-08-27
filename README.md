@@ -13,7 +13,7 @@ To render changes, call:
 ```
 this.setStateByAnimation(
   statesToRender
-, this.startAnimation);
+});
 ```
 
 
@@ -29,8 +29,9 @@ getInitialState(){
   let animationProps = {
     ease: 'quadOut',
     speed: '2000',
-    delayValue: '500'
+    delayValue: '1000'
   };
+  
   return ({
    counter1: 0,
    counter2: 200,
@@ -75,7 +76,8 @@ Ease refers to the equation for the animation, defaults to ```quadOut```. You ca
 [mattdesl/eases](https://github.com/mattdesl/eases/blob/master/index.js)
 
 e.g.
-```getInitialState(){
+```
+getInitialState(){
   return (
     animationProps: {
       ease: 'quintInOut',
@@ -86,7 +88,9 @@ e.g.
 }
 ```
 #installing
-```npm install react-animation-mixin --save```
+```
+npm install react-animation-mixin --save-dev
+```
 
 
 inspired by @javierbyte's react-number-easing.

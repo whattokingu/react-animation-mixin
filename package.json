@@ -1,0 +1,27 @@
+{
+  "name": "react-animation-mixin",
+  "version": "0.0.1",
+  "description": "A react component mixin to animate the component by values",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/whattokingu/react-animation-mixin.git"
+  },
+  "keywords": [
+    "react",
+    "animation",
+    "mixin"
+  ],
+  "author": "whattokingu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/whattokingu/react-animation-mixin/issues"
+  },
+  "homepage": "https://github.com/whattokingu/react-animation-mixin#readme",
+  "devDependencies": {
+    "eases": "^1.0.6"
+  }
+}

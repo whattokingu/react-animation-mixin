@@ -86,3 +86,5 @@ e.g.
 }
 ```
 
+inspired by @javierbyte's react-number-easing.
+

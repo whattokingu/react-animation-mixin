@@ -33,17 +33,15 @@ getInitialState(){
     delayValue: '500'
   };
   return ({
-  counter1: 0,
-  counter2: 200,
-  values: values,
-
-  animationProps: animationProps
+   counter1: 0,
+   counter2: 200,
+   animationProps: animationProps
   });
 },
 componentDidMount(){
   this.setStateByAnimation(
-  counter1: 100,
-  counter2: 100
+   counter1: 100,
+   counter2: 100
   );
 },
 

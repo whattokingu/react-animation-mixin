@@ -85,6 +85,7 @@ e.g.
   );
 }
 ```
-
+#installing
+```npm install react-animation-mixin --save```
 inspired by @javierbyte's react-number-easing.
 

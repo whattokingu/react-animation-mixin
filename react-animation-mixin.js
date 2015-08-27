@@ -51,7 +51,8 @@ var AnimationByState = {
   },
   startAnimation: function startAnimation() {
     var _this = this;
-
+    clearTimeout(this.timeout);
+    clearTimeout(this.delayTimeout);
     var delayValue = this.state.animationProps ? this.state.animationProps.delayValue : undefined;
     if (!isNaN(parseInt(delayValue, 10))) {
       setTimeout(function () {
@@ -59,7 +60,6 @@ var AnimationByState = {
         _this.updateNumbers();
       }, delayValue);
     } else {
-      this.startAnimationTime = new Date().getTime();
       this.updateNumbers();
     }
   },
@@ -76,15 +76,16 @@ var AnimationByState = {
     for (var value in targetValues) {
       if (targetValues.hasOwnProperty(value)) {
         var prevVal = this.state.prevValues[value] ? this.state.prevValues[value] : 0;
-        newValues[value] = Math.round((targetValues[value] - prevVal) * progress + prevVal);
+        var difference = Math.round((targetValues[value] - prevVal) * progress);
+        newValues[value] = difference + parseInt(prevVal);
       }
     }
     this.setState(newValues);
     if (elapsedTime < speed) {
       this.timeout = setTimeout(this.updateNumbers, 16); // 16ms === 60 frames/sec
     } else {
-        this.setState(targetValues);
-      }
+      this.setState(targetValues);
+    }
   },
 
   componentWillUnmount: function componentWillUnmount() {

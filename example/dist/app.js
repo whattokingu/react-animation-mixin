@@ -75,7 +75,9 @@ var SimpleCounter = _react2['default'].createClass({
               'update'
             )
           )
-        )
+        ),
+        _react2['default'].createElement('div', { className: 'bar',
+          style: Object.assign({}, this.styleSheet.bar1, { width: this.state.counter1 }) })
       ),
       _react2['default'].createElement(
         'div',
@@ -103,7 +105,9 @@ var SimpleCounter = _react2['default'].createClass({
               'update'
             )
           )
-        )
+        ),
+        _react2['default'].createElement('div', { className: 'bar',
+          style: Object.assign({}, this.styleSheet.bar2, { width: this.state.counter2 }) })
       )
     );
   },
@@ -117,7 +121,8 @@ var SimpleCounter = _react2['default'].createClass({
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      justifyContent: 'center'
+      justifyContent: 'center',
+      position: 'relative'
     },
     number: {
       backgroundColor: 'lightBlue',
@@ -127,10 +132,25 @@ var SimpleCounter = _react2['default'].createClass({
     input: {
       fontSize: '20px'
     },
+    bar1: {
+      position: 'absolute',
+      bottom: '0',
+      left: '30%',
+      height: '30px',
+      backgroundColor: 'blue'
+    },
+    bar2: {
+      position: 'absolute',
+      bottom: '0',
+      left: '30%',
+      height: '30px',
+      backgroundColor: 'black'
+    },
     form: {
       display: 'flex',
       flexDirection: 'column',
-      alignItems: 'center'
+      alignItems: 'center',
+      marginBottom: '50px'
     },
     button: {
       marginTop: '10px',

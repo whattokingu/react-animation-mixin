@@ -50,7 +50,11 @@ var SimpleCounter = React.createClass({
                 <button type='submit' style={this.styleSheet.button}>update</button>
               </div>
             </form>
-
+            <div className='bar'
+                 style={Object.assign({},
+               this.styleSheet.bar1,
+               {width: this.state.counter1}
+               )}></div>
           </div>
           <div style={this.styleSheet.counter}>
             <h1>Counter 2</h1>
@@ -61,7 +65,13 @@ var SimpleCounter = React.createClass({
                 <button type='submit' style={this.styleSheet.button}>update</button>
               </div>
             </form>
+            <div className='bar'
+                 style={Object.assign({},
+               this.styleSheet.bar2,
+               {width: this.state.counter2}
+               )}></div>
           </div>
+
         </div>
     );
   },
@@ -75,7 +85,8 @@ var SimpleCounter = React.createClass({
       display:'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      justifyContent: 'center'
+      justifyContent: 'center',
+      position: 'relative'
     },
     number: {
       backgroundColor: 'lightBlue',
@@ -85,10 +96,25 @@ var SimpleCounter = React.createClass({
     input: {
       fontSize: '20px'
     },
+    bar1: {
+      position: 'absolute',
+      bottom: '0',
+      left: '30%',
+      height: '30px',
+      backgroundColor: 'blue'
+    },
+    bar2: {
+      position: 'absolute',
+      bottom: '0',
+      left: '30%',
+      height: '30px',
+      backgroundColor: 'black'
+    },
     form: {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
+      marginBottom: '50px'
     },
     button:{
       marginTop: '10px',

@@ -76,7 +76,9 @@ var SimpleCounter = _react2['default'].createClass({
               'update'
             )
           )
-        )
+        ),
+        _react2['default'].createElement('div', { className: 'bar',
+          style: Object.assign({}, this.styleSheet.bar1, { width: this.state.counter1 }) })
       ),
       _react2['default'].createElement(
         'div',
@@ -104,7 +106,9 @@ var SimpleCounter = _react2['default'].createClass({
               'update'
             )
           )
-        )
+        ),
+        _react2['default'].createElement('div', { className: 'bar',
+          style: Object.assign({}, this.styleSheet.bar2, { width: this.state.counter2 }) })
       )
     );
   },
@@ -118,7 +122,8 @@ var SimpleCounter = _react2['default'].createClass({
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      justifyContent: 'center'
+      justifyContent: 'center',
+      position: 'relative'
     },
     number: {
       backgroundColor: 'lightBlue',
@@ -128,10 +133,25 @@ var SimpleCounter = _react2['default'].createClass({
     input: {
       fontSize: '20px'
     },
+    bar1: {
+      position: 'absolute',
+      bottom: '0',
+      left: '30%',
+      height: '30px',
+      backgroundColor: 'blue'
+    },
+    bar2: {
+      position: 'absolute',
+      bottom: '0',
+      left: '30%',
+      height: '30px',
+      backgroundColor: 'black'
+    },
     form: {
       display: 'flex',
       flexDirection: 'column',
-      alignItems: 'center'
+      alignItems: 'center',
+      marginBottom: '50px'
     },
     button: {
       marginTop: '10px',
@@ -514,31 +534,37 @@ var eases = require('eases');
 
 var AnimationByState = {
   setStateByAnimation: function setStateByAnimation(states) {
+    var _this = this;
     let currentTargetValues = {};
-    for(var state in states){
+
+    var delayValue = this.state.animationProps ? this.state.animationProps.delayValue : undefined;
+
+    for (var state in states) {
       currentTargetValues[state] = this.state[state];
-      if(isNaN(states[state])){
+      if (isNaN(states[state])) {
         states[state] = 0;
       }
     }
-    this.setState({
-      prevValues: currentTargetValues,
-      targetValues: states
-    }, this.startAnimation);
+    if (!isNaN(parseInt(delayValue, 10))) {
+      setTimeout(function () {
+        _this.clearTimeout(_this.timeout);
+        _this.setState({
+          prevValues: currentTargetValues,
+          targetValues: states
+        }, _this.startAnimation);
+      }, delayValue);
+    }else{
+      _this.clearTimeout(_this.timeout);
+      _this.setState({
+        prevValues: currentTargetValues,
+        targetValues: states
+      }, _this.startAnimation);
+    }
   },
   startAnimation: function startAnimation() {
     var _this = this;
-
-    var delayValue = this.state.animationProps ? this.state.animationProps.delayValue : undefined;
-    if (!isNaN(parseInt(delayValue, 10))) {
-      setTimeout(function () {
-        _this.startAnimationTime = new Date().getTime();
-        _this.updateNumbers();
-      }, delayValue);
-    } else {
-      this.startAnimationTime = new Date().getTime();
-      this.updateNumbers();
-    }
+    _this.startAnimationTime = new Date().getTime();
+    _this.updateNumbers();
   },
 
   updateNumbers: function updateNumbers() {
@@ -553,15 +579,21 @@ var AnimationByState = {
     for (var value in targetValues) {
       if (targetValues.hasOwnProperty(value)) {
         var prevVal = this.state.prevValues[value] ? this.state.prevValues[value] : 0;
-        newValues[value] = Math.round((targetValues[value] - prevVal) * progress + prevVal);
+        var difference = Math.round((targetValues[value] - prevVal) * progress);
+        newValues[value] = difference + parseInt(prevVal);
       }
     }
     this.setState(newValues);
     if (elapsedTime < speed) {
       this.timeout = setTimeout(this.updateNumbers, 16); // 16ms === 60 frames/sec
     } else {
-        this.setState(targetValues);
-      }
+      this.setState(targetValues);
+    }
+  },
+
+  clearTimeout(timeout){
+    this.setState(this.state.targetValues);
+    clearTimeout(timeout);
   },
 
   componentWillUnmount: function componentWillUnmount() {

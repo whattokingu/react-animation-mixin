@@ -37,31 +37,37 @@ var eases = require('eases');
 
 var AnimationByState = {
   setStateByAnimation: function setStateByAnimation(states) {
+    var _this = this;
     let currentTargetValues = {};
-    for(var state in states){
+
+    var delayValue = this.state.animationProps ? this.state.animationProps.delayValue : undefined;
+
+    for (var state in states) {
       currentTargetValues[state] = this.state[state];
-      if(isNaN(states[state])){
+      if (isNaN(states[state])) {
         states[state] = 0;
       }
     }
-    this.setState({
-      prevValues: currentTargetValues,
-      targetValues: states
-    }, this.startAnimation);
+    if (!isNaN(parseInt(delayValue, 10))) {
+      setTimeout(function () {
+        _this.clearTimeout(_this.timeout);
+        _this.setState({
+          prevValues: currentTargetValues,
+          targetValues: states
+        }, _this.startAnimation);
+      }, delayValue);
+    }else{
+      _this.clearTimeout(_this.timeout);
+      _this.setState({
+        prevValues: currentTargetValues,
+        targetValues: states
+      }, _this.startAnimation);
+    }
   },
   startAnimation: function startAnimation() {
     var _this = this;
-    clearTimeout(this.timeout);
-    clearTimeout(this.delayTimeout);
-    var delayValue = this.state.animationProps ? this.state.animationProps.delayValue : undefined;
-    if (!isNaN(parseInt(delayValue, 10))) {
-      setTimeout(function () {
-        _this.startAnimationTime = new Date().getTime();
-        _this.updateNumbers();
-      }, delayValue);
-    } else {
-      this.updateNumbers();
-    }
+    _this.startAnimationTime = new Date().getTime();
+    _this.updateNumbers();
   },
 
   updateNumbers: function updateNumbers() {
@@ -86,6 +92,11 @@ var AnimationByState = {
     } else {
       this.setState(targetValues);
     }
+  },
+
+  clearTimeout(timeout){
+    this.setState(this.state.targetValues);
+    clearTimeout(timeout);
   },
 
   componentWillUnmount: function componentWillUnmount() {

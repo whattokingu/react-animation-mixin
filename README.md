@@ -11,9 +11,11 @@ The properties in values and displayValues should have the same property.
 
 To render changes, call:
 
-```this.setStateByAnimation(
+```
+this.setStateByAnimation(
   statesToRender
-, this.startAnimation); ```
+, this.startAnimation);
+```
 
 
 

@@ -3,6 +3,8 @@
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -22,6 +24,8 @@ var SimpleCounter = _react2['default'].createClass({
     return {
       counter1: 0,
       counter2: 200,
+      value1: 0,
+      value2: 0,
       animationProps: animationProps
     };
   },
@@ -31,14 +35,24 @@ var SimpleCounter = _react2['default'].createClass({
       counter2: 100
     });
   },
+  handleClick: function handleClick(counter, e) {
+    e.preventDefault();
+    var value;
+    counter === 'counter1' ? value = this.state.value1 : value = this.state.value2;
 
+    this.setStateByAnimation(_defineProperty({}, counter, value));
+  },
+
+  handleChange: function handleChange(value, e) {
+    this.setState(_defineProperty({}, value, e.target.value));
+  },
   render: function render() {
     return _react2['default'].createElement(
       'div',
-      { className: 'simpleCounter' },
+      { className: 'SimpleCounter', style: this.styleSheet.SimpleCounter },
       _react2['default'].createElement(
         'div',
-        null,
+        { style: this.styleSheet.counter },
         _react2['default'].createElement(
           'h1',
           null,
@@ -46,13 +60,27 @@ var SimpleCounter = _react2['default'].createClass({
         ),
         _react2['default'].createElement(
           'h2',
-          null,
+          { style: this.styleSheet.number },
           this.state.counter1
+        ),
+        _react2['default'].createElement(
+          'form',
+          { onSubmit: this.handleClick.bind(this, 'counter1'), style: this.styleSheet.form },
+          _react2['default'].createElement('input', { type: 'number', value: this.state.value1, onChange: this.handleChange.bind(this, 'value1'), style: this.styleSheet.input }),
+          _react2['default'].createElement(
+            'div',
+            null,
+            _react2['default'].createElement(
+              'button',
+              { type: 'submit', style: this.styleSheet.button },
+              'update'
+            )
+          )
         )
       ),
       _react2['default'].createElement(
         'div',
-        null,
+        { style: this.styleSheet.counter },
         _react2['default'].createElement(
           'h1',
           null,
@@ -60,16 +88,64 @@ var SimpleCounter = _react2['default'].createClass({
         ),
         _react2['default'].createElement(
           'h2',
-          null,
+          { style: this.styleSheet.number },
           this.state.counter2
+        ),
+        _react2['default'].createElement(
+          'form',
+          { onSubmit: this.handleClick.bind(this, 'counter2'), style: this.styleSheet.form },
+          _react2['default'].createElement('input', { type: 'number', value: this.state.value2, onChange: this.handleChange.bind(this, 'value2'), style: this.styleSheet.input }),
+          _react2['default'].createElement(
+            'div',
+            null,
+            _react2['default'].createElement(
+              'button',
+              { type: 'submit', style: this.styleSheet.button },
+              'update'
+            )
+          )
         )
       )
     );
+  },
+  styleSheet: {
+    SimpleCounter: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center'
+    },
+    counter: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center'
+    },
+    number: {
+      backgroundColor: 'lightBlue',
+      padding: '10px',
+      borderRadius: '5px'
+    },
+    input: {
+      fontSize: '20px'
+    },
+    form: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center'
+    },
+    button: {
+      marginTop: '10px',
+      fontSize: '25px',
+      backgroundColor: '#6DB96D',
+      cursor: 'pointer'
+    }
   }
 
 });
 
 _react2['default'].render(_react2['default'].createElement(SimpleCounter, null), document.getElementById('demo'));
+
+//<button onClick={this.handleClick(this, 'counter1')}>update</button>
 },{"react":190,"react-animation-mixin":35}],2:[function(require,module,exports){
 function backInOut(t) {
   var s = 1.70158 * 1.525
@@ -441,11 +517,13 @@ var AnimationByState = {
     let currentTargetValues = {};
     for(var state in states){
       currentTargetValues[state] = this.state[state];
+      if(isNaN(states[state])){
+        states[state] = 0;
+      }
     }
-
     this.setState({
-      prevValues: Object.assign({}, this.state.prevValues, currentTargetValues),
-      targetValues: Object.assign({}, this.state.targetValues, states)
+      prevValues: currentTargetValues,
+      targetValues: states
     }, this.startAnimation);
   },
   startAnimation: function startAnimation() {

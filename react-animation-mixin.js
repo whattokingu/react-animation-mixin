@@ -94,7 +94,7 @@ var AnimationByState = {
     }
   },
 
-  clearTimeout(timeout){
+  clearTimeout: function(timeout){
     this.setState(this.state.targetValues);
     clearTimeout(timeout);
   },

@@ -60,5 +60,5 @@ var AnimationMixin = {
   AnimateByState: AnimationByState
 };
 
-exports.AnimationMixin = AnimationMixin;
+module.exports.AnimationMixin = AnimationMixin;
 

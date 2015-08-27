@@ -1,11 +1,14 @@
 {
   "name": "example",
   "version": "0.0.1",
-  "description": "example of animation via mixin",
-  "main": "index.html",
+  "description": "react animation mixin demo",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "whattokingu",
-  "license": "ISC"
+  "author": "whattokingu <zhengweihan.91@gmail.com> (zweihan.com)",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^3.9.0"
+  }
 }

@@ -38,10 +38,10 @@ getInitialState(){
   });
 },
 componentDidMount(){
-  this.setStateByAnimation(
+  this.setStateByAnimation({
    counter1: 100,
    counter2: 100
-  );
+  });
 },
 
 render(){
@@ -52,9 +52,9 @@ render(){
         <h2>{this.state.values.counter1}</h2>
       </div>
       <div>
-        <h1>Counter 2</h2>
+        <h1>Counter 2</h1>
         <h2>{this.state.values.counter2}</h2>
-      <div>
+      </div>
     </div>
   );
 }
@@ -87,5 +87,7 @@ e.g.
 ```
 #installing
 ```npm install react-animation-mixin --save```
+
+
 inspired by @javierbyte's react-number-easing.
 

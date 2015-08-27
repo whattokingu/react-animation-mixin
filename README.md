@@ -1,8 +1,7 @@
 # react-animation-mixin
-A react component mixin for animating value changes. 
-2 ways to include the mixin: via state or via props
+A react component mixin for animating value changes.
 
-via state:
+
 animation is done via state changes of (object) 'displayValues'.
 Add whatever values you want as a property of displayValues.
 The mixin utilises another state, values, as intermediate values during the animation rendering.

@@ -23,7 +23,7 @@ Below is an example component animation using state changes:
 import React from 'react';
 import {AnimateByState} from './AnimationMixin.js';
 
-var simpleCounter = React.createClass({
+var SimpleCounter = React.createClass({
 mixins: [AnimateByState],
 getInitialState(){
   let animationProps = {
@@ -47,7 +47,7 @@ componentDidMount(){
 
 render(){
   return(
-    <div>
+    <div className='SimpleCounter'>
       <div>
         <h1>Counter 1</h1>
         <h2>{this.state.values.counter1}</h2>

@@ -1,13 +1,21 @@
 import eases from 'eases';
 
-let AnimateByState = {
+let AnimationByState = {
+  setStateByAnimation(states) {
+    let currentTargetValues = this.state.targetValues;
 
+    this.setState({
+          prevValues: Object.assign({}, this.state.prevValues, currentTargetValues),
+          targetValues: Object.assign({}, this.state.targetValues, states)
+        }, this.startAnimation);
+  },
   startAnimation() {
-    if(!isNaN(parseInt(this.state.delayValue, 10))) {
+    let delayValue = this.state.animationProps ? this.state.animationProps.delayValue : undefined;
+    if(!isNaN(parseInt(delayValue, 10))) {
       setTimeout( ()=> {
         this.startAnimationTime = (new Date()).getTime();
         this.updateNumbers();
-      }, this.state.delayValue);
+      }, delayValue);
     }else {
       this.startAnimationTime = (new Date()).getTime();
       this.updateNumbers();
@@ -15,26 +23,29 @@ let AnimateByState = {
   },
 
   updateNumbers() {
+    let ease = this.state.animationProps ? this.state.animationProps.ease || 'quadOut' : 'quadOut';
+    let speed = this.state.animationProps ? this.state.animationProps.speed || 500 : 500;
 
-    let targetValues = this.state.displayValues;
+    let targetValues = this.state.targetValues;
     var now = (new Date()).getTime();
     var elapsedTime = (now - this.startAnimationTime);
-    var progress = eases[this.state.ease](elapsedTime / this.state.speed);
+    var progress = eases[ease](elapsedTime / speed);
     let newValues = [];
     for(let value in targetValues) {
       if(targetValues.hasOwnProperty(value)) {
-        newValues[value] = Math.round((targetValues[value] * progress));
+        let prevVal = this.state.prevValues[value] ? this.state.prevValues[value] : 0;
+        newValues[value] = Math.round((targetValues[value] - prevVal) * progress + prevVal);
       }
     }
-    this.setState({
-      values: newValues
-    });
-    if (elapsedTime < this.state.speed) {
+    this.setState(
+      newValues
+    );
+    if (elapsedTime < speed) {
       this.timeout = setTimeout(this.updateNumbers, 16); // 16ms === 60 frames/sec
     } else {
-      this.setState({
-        values: targetValues
-      });
+      this.setState(
+        targetValues
+      );
     }
   },
 
@@ -46,7 +57,8 @@ let AnimateByState = {
 };
 
 let AnimationMixin = {
-  AnimateByState: AnimateByState
+  AnimateByState: AnimationByState
 };
 
 export default AnimationMixin;
+

@@ -11,7 +11,9 @@ The properties in values and displayValues should have the same property.
 
 To render changes, call:
 
-```this.setState({displayValues: newValues}, this.startAnimation); ```
+```this.setStateByAnimation(
+  statesToRender
+, this.startAnimation); ```
 
 
 
@@ -23,20 +25,25 @@ import {AnimateByState} from './AnimationMixin.js';
 var simpleCounter = React.createClass({
 mixins: [AnimateByState],
 getInitialState(){
-  let values={
-    counter1: 0;
-    counter2: 100;
+  let animationProps = {
+    ease: 'quadOut',
+    speed: '2000',
+    delayValue: '500'
   };
   return ({
-  displayValues: values,
-  values: values
+  counter1: 0,
+  counter2: 200,
+  values: values,
+
+  animationProps: animationProps
   });
 },
 componentDidMount(){
-  this.setState({
-    displayValues: {counter1: 50, counter2: 100}
-  }, this.startAnimation);
-}
+  this.setStateByAnimation(
+  counter1: 100,
+  counter2: 100
+  );
+},
 
 render(){
   return(

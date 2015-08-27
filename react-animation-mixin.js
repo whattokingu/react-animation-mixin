@@ -40,11 +40,13 @@ var AnimationByState = {
     let currentTargetValues = {};
     for(var state in states){
       currentTargetValues[state] = this.state[state];
+      if(isNaN(states[state])){
+        states[state] = 0;
+      }
     }
-
     this.setState({
-      prevValues: Object.assign({}, this.state.prevValues, currentTargetValues),
-      targetValues: Object.assign({}, this.state.targetValues, states)
+      prevValues: currentTargetValues,
+      targetValues: states
     }, this.startAnimation);
   },
   startAnimation: function startAnimation() {

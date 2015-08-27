@@ -1,18 +1,18 @@
-import eases from 'eases';
+var eases =require('eases');
 
-let AnimationByState = {
-  setStateByAnimation(states) {
-    let currentTargetValues = this.state.targetValues;
+var AnimationByState = {
+  setStateByAnimation: function(states){
+    var currentTargetValues = this.state.targetValues;
 
     this.setState({
           prevValues: Object.assign({}, this.state.prevValues, currentTargetValues),
           targetValues: Object.assign({}, this.state.targetValues, states)
         }, this.startAnimation);
   },
-  startAnimation() {
-    let delayValue = this.state.animationProps ? this.state.animationProps.delayValue : undefined;
+  startAnimation: function() {
+    var delayValue = this.state.animationProps ? this.state.animationProps.delayValue : undefined;
     if(!isNaN(parseInt(delayValue, 10))) {
-      setTimeout( ()=> {
+      setTimeout( function() {
         this.startAnimationTime = (new Date()).getTime();
         this.updateNumbers();
       }, delayValue);
@@ -22,18 +22,18 @@ let AnimationByState = {
     }
   },
 
-  updateNumbers() {
-    let ease = this.state.animationProps ? this.state.animationProps.ease || 'quadOut' : 'quadOut';
-    let speed = this.state.animationProps ? this.state.animationProps.speed || 500 : 500;
+  updateNumbers: function() {
+    var ease = this.state.animationProps ? this.state.animationProps.ease || 'quadOut' : 'quadOut';
+    var speed = this.state.animationProps ? this.state.animationProps.speed || 500 : 500;
 
-    let targetValues = this.state.targetValues;
+    var targetValues = this.state.targetValues;
     var now = (new Date()).getTime();
     var elapsedTime = (now - this.startAnimationTime);
     var progress = eases[ease](elapsedTime / speed);
-    let newValues = [];
-    for(let value in targetValues) {
+    var newValues = [];
+    for(var value in targetValues) {
       if(targetValues.hasOwnProperty(value)) {
-        let prevVal = this.state.prevValues[value] ? this.state.prevValues[value] : 0;
+        var prevVal = this.state.prevValues[value] ? this.state.prevValues[value] : 0;
         newValues[value] = Math.round((targetValues[value] - prevVal) * progress + prevVal);
       }
     }
@@ -49,16 +49,16 @@ let AnimationByState = {
     }
   },
 
-  componentWillUnmount() {
+  componentWillUnmount: function() {
     clearTimeout(this.timeout);
     clearTimeout(this.delayTimeout);
   }
 
 };
 
-let AnimationMixin = {
+var AnimationMixin = {
   AnimateByState: AnimationByState
 };
 
-export default AnimationMixin;
+exports.AnimationMixin = AnimationMixin;
 

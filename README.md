@@ -63,3 +63,27 @@ render(){
 });
 
 ```
+
+# Controlling Animation
+Animation can be controlled via a state, animationProps.
+Following properties are can currently be manipulated:
+  ease,
+  speed (in ms, defaults to 500),
+  delayValue (in ms, defaults to 0)
+
+Speed and delayValue are self-explanatory.
+Ease refers to the equation for the animation, defaults to ```quadOut```. You can choose from
+[mattdesl/eases](https://github.com/mattdesl/eases/blob/master/index.js)
+
+e.g.
+```getInitialState(){
+  return (
+    animationProps: {
+      ease: 'quintInOut',
+      speed: 2000,
+      delayValue: 500
+    }
+  );
+}
+```
+

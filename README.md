@@ -6,11 +6,13 @@ via state:
 animation is done via state changes of (object) 'displayValues'.
 Add whatever values you want as a property of displayValues.
 The mixin utilises another state, values, as intermediate values during the animation rendering.
+Use the corresponding properties in 'values' in lieu of those displayValues.
 The properties in values and displayValues should have the same property.
 
 To render changes, call:
 
 ```this.setState({displayValues: newValues}, this.startAnimation); ```
+
 
 
 Below is an example component animation using state changes:
@@ -32,8 +34,8 @@ getInitialState(){
 },
 componentDidMount(){
   this.setState({
-    displaValues: {counter1: 50, counter2: 100}
-  });
+    displayValues: {counter1: 50, counter2: 100}
+  }, this.startAnimation);
 }
 
 render(){

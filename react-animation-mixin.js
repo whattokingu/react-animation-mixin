@@ -38,7 +38,7 @@ var eases = require('eases');
 var AnimationByState = {
   setStateByAnimation: function setStateByAnimation(states) {
     var _this = this;
-    let currentTargetValues = {};
+    var currentTargetValues = {};
 
     var delayValue = this.state.animationProps ? this.state.animationProps.delayValue : undefined;
 

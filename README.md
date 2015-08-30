@@ -4,9 +4,9 @@ A react component mixin for animating value changes.
 
 animation is done via state changes of (object) 'displayValues'.
 Add whatever values you want as a property of displayValues.
-The mixin utilises another state, values, as intermediate values during the animation rendering.
-Use the corresponding properties in 'values' in lieu of those displayValues.
-The properties in values and displayValues should have the same property.
+The mixin first set the end state values as a state-object called 'targetValues'. 
+Then, updates the state values via 'setState' methods as per React repeatedly, 
+until the targetValues are reached. 
 
 To render changes, call:
 
@@ -87,11 +87,13 @@ getInitialState(){
   );
 }
 ```
-#installing
+# installing
 ```
 npm install react-animation-mixin --save-dev
 ```
 
 
 inspired by @javierbyte's react-number-easing.
+
+Any suggestions/comments welcomed! 
 

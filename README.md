@@ -2,8 +2,7 @@
 A react component mixin for animating value changes.
 
 
-animation is done via state changes of (object) 'displayValues'.
-Add whatever values you want as a property of displayValues.
+Animation is performed via a method called setStateByAnimation. Just use this method instead of react's setState. 
 The mixin first set the end state values as a state-object called 'targetValues'. 
 Then, updates the state values via 'setState' methods as per React repeatedly, 
 until the targetValues are reached. 
